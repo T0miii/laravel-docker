@@ -1,0 +1,24 @@
+version: "3"
+services:
+  # The Application - PHP
+  app:
+    build:
+      context: ../docker
+      dockerfile: app.dockerfile
+    working_dir: /var/www
+    volumes:
+      - ../:/var/www
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=database"
+
+  # The Web Server - NGINX
+  web:
+    build:
+      context: ./
+      dockerfile: web.dockerfile
+    working_dir: /var/www
+    volumes:
+      - ../:/var/www
+    ports:
+      - 8080:80
